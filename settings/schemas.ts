@@ -1,16 +1,12 @@
 import { z } from "zod";
-import {t} from '@/scripts/translate'
-
-
+import { t } from '@/scripts/translate'
+import { commonValidators } from "@/lib/schemas"
 
 export const requestACallSchema = z.object({
     name: z.string()
         .min(3, { message: t('fields.full_name.error') })
         .max(100, { message: t('fields.full_name.error') }),
-    email: z.string()
-        .email({ message: t('fields.email.error') })
-        .min(3, { message: t('fields.email.error') })
-        .max(100, { message: t('fields.email.error') }),
+    email: commonValidators.email,
     company: z.string()
         .min(3, { message: t('fields.company.error') })
         .max(100, { message: t('fields.company.error') }),
@@ -20,11 +16,7 @@ export const requestACallSchema = z.object({
     accept: z.boolean().refine((data) => data === true, { message: t('fields.accept.error') })
 })
 
-
 export const newsletterSchema = z.object({
-    email: z.string()
-        .email({ message: t('fields.email.error') })
-        .min(3, { message: t('fields.email.error') })
-        .max(100, { message: t('fields.email.error') }),
+    email: commonValidators.email,
     accept: z.boolean().refine((data) => data === true, { message: t('fields.accept.error') })
 })
